@@ -49,7 +49,7 @@ SECTIONS = [
     "📚 Sources",
 ]
 
-st.sidebar.title("🇵🇰 Engr. Syed Hassan Iqbal Shah")
+st.sidebar.title("Engr. Syed Hassan Iqbal Shah")
 choice = st.sidebar.radio("Go to section", SECTIONS, label_visibility="collapsed")
 st.sidebar.markdown("---")
 st.sidebar.caption(
