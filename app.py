@@ -69,8 +69,7 @@ if choice == "🏠 Overview":
         "**mountain ranges**, **national disaster-risk context**, **lakes**, **and the** "
         "**socio-economic, agro-economic and geo-political dimensions** **of water "
         "management** **— including the** **Indus Waters Treaty**, **Inter-provincial disputes**, "
-        "**CPEC hydropower investment, and India's upstream dam-design disputes**."
-                "**(By Engr. Syed Hassan Iqbal Shah)** "
+        "**CPEC hydropower investment, and India's upstream dam-design disputes**."  "***(By Engr. Syed Hassan Iqbal Shah)*** "
     )
     st.plotly_chart(map_view.combined_overview_map(), use_container_width=True)
 
