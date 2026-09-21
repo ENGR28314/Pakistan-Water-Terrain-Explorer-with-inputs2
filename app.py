@@ -21,7 +21,7 @@ import file_import
 
 st.set_page_config(
     page_title="Pakistan Water, Terrain & Disaster-Risk Explorer",
-    page_icon="🇵🇰", "Engr",
+    page_icon="🇵🇰",
     layout="wide",
     initial_sidebar_state="expanded",
 )
