@@ -64,7 +64,7 @@ st.sidebar.caption(
 if choice == "🏠 Overview":
     st.title("Pakistan Water, Terrain & Disaster-Risk Explorer")
     st.markdown(
-        "An interactive reference dashboard covering Pakistan's **provinces**, "
+        "**An Interactive reference dashboard covering Pakistan's** **provinces**, "
         "**river systems**, **dams/barrages/link canals**, **climatic regions**, "
         "**mountain ranges**, **national disaster-risk context**, **lakes**, and the "
         "**socio-economic, agro-economic and geo-political dimensions** of water "
