@@ -3,5 +3,4 @@ plotly>=5.20.0
 networkx>=3.2
 pandas>=2.1.0
 pdfplumber>=0.11.0
-folium>=0.16.0
-streamlit-folium>=0.21.0
+
