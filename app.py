@@ -21,7 +21,7 @@ import file_import
 
 st.set_page_config(
     page_title="Pakistan Water & Terrain Explorer",
-    page_icon="🇵🇰",
+    page_icon="🇵🇰 Engr.28314",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -49,7 +49,7 @@ SECTIONS = [
     "📚 Sources",
 ]
 
-st.sidebar.title("🇵🇰 Navigation")
+st.sidebar.title("🇵🇰 Engr28314")
 choice = st.sidebar.radio("Go to section", SECTIONS, label_visibility="collapsed")
 st.sidebar.markdown("---")
 st.sidebar.caption(
