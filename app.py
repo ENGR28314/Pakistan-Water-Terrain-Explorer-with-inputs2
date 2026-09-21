@@ -66,9 +66,9 @@ if choice == "🏠 Overview":
     st.markdown(
         "**An Interactive reference dashboard covering Pakistan's** **provinces**, "
         "**river systems**, **dams/barrages/link canals**, **climatic regions**, "
-        "**mountain ranges**, **national disaster-risk context**, **lakes**, and the "
-        "**socio-economic, agro-economic and geo-political dimensions** of water "
-        "management — including the **Indus Waters Treaty**, **Inter-provincial disputes**, "
+        "**mountain ranges**, **national disaster-risk context**, **lakes**, **and the** "
+        "**socio-economic, agro-economic and geo-political dimensions** **of water "
+        "management** **— including the** **Indus Waters Treaty**, **Inter-provincial disputes**, "
         "**CPEC hydropower investment**, and **India's upstream dam-design disputes**."
     )
     st.plotly_chart(map_view.combined_overview_map(), use_container_width=True)
