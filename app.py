@@ -20,8 +20,8 @@ import hydraulic_model as hm
 import file_import
 
 st.set_page_config(
-    page_title="Pakistan Water & Terrain Explorer",
-    page_icon="🇵🇰 Engr.28314",
+    page_title="Pakistan Water, Terrain & Disaster-Risk Explorer",
+    page_icon="🇵🇰"  # Pakistan Flag Emoji  Engr.28314",
     layout="wide",
     initial_sidebar_state="expanded",
 )
