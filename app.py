@@ -63,6 +63,7 @@ st.sidebar.caption(
 # ---------------------------------------------------------------------------
 if choice == "🏠 Overview":
     st.title("Pakistan Water, Terrain & Disaster-Risk Explorer")
+    st.title("Engr.Syed Hassan Iqbl Shah")
     st.markdown(
         "**An Interactive reference dashboard covering Pakistan's** **provinces**, "
         "**river systems**, **dams/barrages/link canals**, **climatic regions**, "
