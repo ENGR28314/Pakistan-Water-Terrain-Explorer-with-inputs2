@@ -1041,6 +1041,20 @@ SOURCES = {
             "url": "https://www.fao.org/4/x5871e/x5871e05.htm",
         },
     ],
+    "Water Quality Guidelines (EC · pH · DO)": [
+        {
+            "label": "PCRWR — Water Quality Monitoring & National Standards for Drinking Water Quality (NSDWQ)",
+            "url": "https://www.pcrwr.gov.pk/water-quality/",
+        },
+        {
+            "label": "WHO — Guidelines for Drinking-water Quality",
+            "url": "https://www.who.int/publications/i/item/9789241549950",
+        },
+        {
+            "label": "FAO — Water Quality for Agriculture (Irrigation and Drainage Paper 29)",
+            "url": "https://www.fao.org/4/t0234e/t0234e00.htm",
+        },
+    ],
 }
 
 # ---------------------------------------------------------------------------

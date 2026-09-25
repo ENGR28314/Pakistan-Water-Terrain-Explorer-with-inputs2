@@ -66,11 +66,29 @@ Created by **Engr. Syed Hassan Iqbal Shah**.
 - **Interactive Hydraulic Models** — simplified reservoir mass-balance
   simulation, shortage-sharing allocation, link-canal transfer calculator,
   and a composite disaster-risk-index tool.
-- **Upload File → Map & Charts** — upload your own **CSV or PDF** and either
-  plot it on an interactive map (needs recognizable latitude/longitude
-  columns) or build a **bar, pie, scatter or line chart** from any of its
-  columns. PDFs work via table extraction, with a text-based fallback (
-  coordinate pairs for the map, `Label: value` lines for charts).
+- **Upload File → Map, Charts & Analytics** — upload your own **CSV or PDF**
+  and either plot it on an interactive map (needs recognizable latitude/
+  longitude columns) or build a **bar, pie, scatter or line chart** from any
+  of its columns. PDFs work via table extraction, with a text-based fallback
+  (coordinate pairs for the map, `Label: value` lines for charts). The same
+  tab also hosts two standalone analysis **engines**:
+  - **Telemetry variance engine** (`telemetry_engine.py`) — answers "which
+    river basin reports the highest average telemetry variance?" using
+    clearly-labeled illustrative daily discharge data (real Indus Waters
+    Treaty PIC-exchanged telemetry isn't publicly published), or your own
+    uploaded basin/value data.
+  - **Water quality engine** (`water_quality_engine.py`) — classifies
+    illustrative per-basin **EC, pH and dissolved oxygen (DO)** readings
+    against WHO / Pakistan NSDWQ / FAO guideline thresholds and computes a
+    simple composite water-quality index.
+
+  Both engines are plain Python modules with no Streamlit dependency — they
+  can be imported into other scripts or run standalone from the command
+  line to produce a Matplotlib chart, e.g.:
+  ```
+  python telemetry_engine.py --days 90 --seed 7 --out telemetry_variance.png
+  python water_quality_engine.py --seed 3 --out water_quality.png
+  ```
 
 ## Project structure
 
@@ -85,7 +103,9 @@ Created by **Engr. Syed Hassan Iqbal Shah**.
 ├── map_view.py             # Plotly geographic map builders
 ├── network_view.py         # NetworkX + Plotly schematic network diagrams
 ├── hydraulic_model.py       # Simplified interactive hydraulic/risk models
-├── file_import.py           # CSV/PDF → DataFrame parsing (Upload File → Map & Charts tab)
+├── file_import.py           # CSV/PDF → DataFrame parsing (Upload File → Map, Charts & Analytics tab)
+├── telemetry_engine.py       # River-basin telemetry variance analysis/visualization engine (standalone-runnable)
+├── water_quality_engine.py    # EC/pH/DO water-quality classification & index engine (standalone-runnable)
 ├── requirements.txt
 ├── .gitignore
 └── README.md

@@ -22,6 +22,8 @@ import map_view
 import network_view
 import hydraulic_model as hm
 import file_import
+import telemetry_engine
+import water_quality_engine
 
 st.set_page_config(
     page_title="Pakistan Water & Terrain Explorer",
@@ -52,7 +54,7 @@ SECTIONS = [
     "🇨🇳 China Hydropower (CPEC)",
     "🇮🇳 Chenab Projects, Flow Concerns & Indus Waters Treaty",
     "🧮 Interactive Hydraulic Models",
-    "📤 Upload File → Map & Charts",
+    "📤 Upload File → Map, Charts & Analytics",
     "📚 Sources",
 ]
 
@@ -113,8 +115,9 @@ if choice == "🏠 Overview":
         "technical contentions, the Head Marala flow issue, and the PCA arbitration timeline\n"
         "- **Interactive Hydraulic Models** — simplified reservoir, shortage-sharing, "
         "link-canal transfer and disaster-risk-index calculators\n"
-        "- **Upload File → Map / Charts** — bring your own CSV or PDF data and plot it as "
-        "a map, or build bar, pie, scatter and line charts from it"
+        "- **Upload File → Map, Charts & Analytics** — bring your own CSV or PDF data and "
+        "plot it as a map or a bar/pie/scatter/line chart, or run the built-in river-basin "
+        "telemetry-variance and EC/pH/DO water-quality engines\n"
     )
     st.caption(
         "Geopolitical, CPEC and dam-governance content is backed by official sources — "
@@ -777,8 +780,8 @@ elif choice == "🧮 Interactive Hydraulic Models":
 # ---------------------------------------------------------------------------
 # 📤 UPLOAD FILE → MAP & CHARTS
 # ---------------------------------------------------------------------------
-elif choice == "📤 Upload File → Map & Charts":
-    st.title("Upload Your Own Data → Map & Charts")
+elif choice == "📤 Upload File → Map, Charts & Analytics":
+    st.title("Upload Your Own Data → Map, Charts & Analytics")
     st.caption(
         "Upload a CSV or PDF and turn it into an interactive map, or a bar, pie, "
         "scatter or line chart — no coding required."
@@ -905,6 +908,116 @@ elif choice == "📤 Upload File → Map & Charts":
                 px.bar(example_chart_df, x="Crop", y="Area (000 ha)", title="Example — Crop Area"),
                 use_container_width=True,
             )
+
+    st.markdown("---")
+    st.header("📡 River Basin Telemetry & Water Quality Analytics")
+    st.caption(
+        "Two lightweight Python analysis engines ship with this project — `telemetry_engine.py` "
+        "and `water_quality_engine.py` — importable here, or runnable standalone from the command "
+        "line (e.g. `python telemetry_engine.py --days 90 --out chart.png`) to produce a Matplotlib "
+        "chart outside the app. Real Indus Waters Treaty PIC-exchanged telemetry isn't publicly "
+        "published, so the data below is clearly-labeled illustrative/synthetic unless you analyze "
+        "your own uploaded file."
+    )
+
+    telemetry_tab, water_quality_tab = st.tabs(
+        ["🌊 Telemetry Variance", "🧪 Water Quality (EC · pH · DO)"]
+    )
+
+    with telemetry_tab:
+        st.subheader("Which river basin reports the highest average telemetry variance?")
+        days = st.slider("Days of synthetic telemetry", 30, 365, 90, key="tel_days")
+        seed = st.number_input("Random seed (reproducibility)", value=42, step=1, key="tel_seed")
+        df_tel = telemetry_engine.generate_synthetic_telemetry(days=days, seed=int(seed))
+        group_col, value_col = "Basin", "Discharge_cumecs"
+        data_source_note = "Illustrative synthetic daily discharge data (not real PIC-exchanged telemetry)."
+
+        if uploaded_file is not None:
+            use_upload = st.checkbox(
+                "Analyze my uploaded file's telemetry instead", key="tel_use_upload_cb"
+            )
+            if use_upload:
+                try:
+                    uploaded_file.seek(0)
+                except Exception:
+                    pass
+                try:
+                    df_uploaded = file_import.load_any_generic(uploaded_file)
+                except file_import.FileImportError as e:
+                    st.error(str(e))
+                else:
+                    cat_cols = df_uploaded.select_dtypes(exclude="number").columns.tolist()
+                    num_cols = df_uploaded.select_dtypes(include="number").columns.tolist()
+                    if cat_cols and num_cols:
+                        group_col = st.selectbox("Group / basin column", cat_cols, key="tel_u_group_col")
+                        value_col = st.selectbox("Value column", num_cols, key="tel_u_value_col")
+                        df_tel = df_uploaded
+                        data_source_note = f"Using your uploaded file **{uploaded_file.name}**."
+                    else:
+                        st.info(
+                            "Couldn't find both a categorical (basin/group) column and a numeric "
+                            "column in this file — showing illustrative data instead."
+                        )
+
+        st.caption(data_source_note)
+        summary_df = telemetry_engine.compute_basin_variance(df_tel, value_col=value_col, group_col=group_col)
+        top = summary_df.iloc[0]
+        st.success(
+            f"Highest telemetry variance: **{top[group_col]}** "
+            f"(variance = {top['variance']:.1f}, std. dev. = {top['std']:.1f})"
+        )
+        st.plotly_chart(
+            px.bar(
+                summary_df, x=group_col, y="variance", color=group_col,
+                title=f"Telemetry variance by {group_col}",
+            ),
+            use_container_width=True,
+        )
+        st.dataframe(summary_df, use_container_width=True, hide_index=True)
+
+    with water_quality_tab:
+        st.subheader("Water Quality Snapshot — EC · pH · Dissolved Oxygen (DO)")
+        st.caption(
+            "Illustrative per-basin snapshot, classified against WHO / Pakistan NSDWQ / FAO "
+            "guideline thresholds. Change the seed for a new illustrative reading."
+        )
+        wq_seed = st.number_input("Random seed", value=7, step=1, key="wq_seed")
+        df_wq = water_quality_engine.generate_synthetic_water_quality(seed=int(wq_seed))
+        df_wq["WQI_composite"] = df_wq.apply(water_quality_engine.composite_water_quality_index, axis=1)
+        st.dataframe(df_wq, use_container_width=True, hide_index=True)
+
+        wq_col1, wq_col2, wq_col3 = st.columns(3)
+        with wq_col1:
+            st.plotly_chart(
+                px.bar(df_wq, x="Basin", y="EC_uS_cm", color="EC_class", title="Electrical Conductivity"),
+                use_container_width=True,
+            )
+        with wq_col2:
+            st.plotly_chart(
+                px.bar(df_wq, x="Basin", y="pH", color="pH_class", title="pH"),
+                use_container_width=True,
+            )
+        with wq_col3:
+            st.plotly_chart(
+                px.bar(df_wq, x="Basin", y="DO_mg_L", color="DO_class", title="Dissolved Oxygen (DO)"),
+                use_container_width=True,
+            )
+
+        st.plotly_chart(
+            px.bar(
+                df_wq, x="Basin", y="WQI_composite",
+                title="Composite Water Quality Index (illustrative, equal-weighted across EC/pH/DO)",
+            ),
+            use_container_width=True,
+        )
+
+        with st.expander("📏 Guideline thresholds used"):
+            for param, t in water_quality_engine.WATER_QUALITY_THRESHOLDS.items():
+                st.markdown(f"**{param}:** {t['note']}")
+
+        with st.expander("📚 Sources for this section"):
+            for ref in data.SOURCES.get("Water Quality Guidelines (EC · pH · DO)", []):
+                st.markdown(f"- [{ref['label']}]({ref['url']})")
 
 # ---------------------------------------------------------------------------
 # 📚 SOURCES

@@ -3,3 +3,5 @@ plotly>=5.20.0
 networkx>=3.2
 pandas>=2.1.0
 pdfplumber>=0.11.0
+numpy>=1.26.0
+matplotlib>=3.8.0
