@@ -179,3 +179,97 @@ def load_any(uploaded_file) -> pd.DataFrame:
     if filename.endswith(".pdf"):
         return load_pdf(uploaded_file)
     raise FileImportError("Unsupported file type — please upload a .csv or .pdf file.")
+
+
+# ---------------------------------------------------------------------------
+# Generic tabular loaders (for charting — no lat/lon required)
+# ---------------------------------------------------------------------------
+_LABEL_VALUE_PATTERN = re.compile(r"^(.+?)[:\-\u2013,]\s*(-?\d[\d,]*\.?\d*)\s*%?\s*$")
+
+
+def load_csv_generic(uploaded_file) -> pd.DataFrame:
+    """Load any CSV as-is (no lat/lon requirement) for charting."""
+    try:
+        uploaded_file.seek(0)
+    except Exception:
+        pass
+    try:
+        raw = pd.read_csv(uploaded_file)
+    except Exception as e:
+        raise FileImportError(f"Could not read this CSV file: {e}")
+    if raw is None or raw.empty:
+        raise FileImportError("The CSV file has no rows.")
+    raw.columns = [str(c).strip() for c in raw.columns]
+    return raw
+
+
+def _extract_pdf_best_table(uploaded_file):
+    tables = _extract_pdf_tables(uploaded_file)
+    if not tables:
+        return None
+    best = max(tables, key=len)
+    header, *body = best
+    try:
+        df = pd.DataFrame(body, columns=header)
+        df.columns = [str(c).strip() for c in df.columns]
+        return df
+    except Exception:
+        return None
+
+
+def _parse_pdf_label_value(text: str) -> pd.DataFrame:
+    """Fallback: parse lines like 'Wheat: 25000' or 'Cotton - 8.2%' into a
+    two-column Label/Value table, useful for charting simple report figures."""
+    rows = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        m = _LABEL_VALUE_PATTERN.match(line)
+        if not m:
+            continue
+        label = m.group(1).strip(" -:,\t")
+        try:
+            value = float(m.group(2).replace(",", ""))
+        except ValueError:
+            continue
+        if not label:
+            continue
+        rows.append({"Label": label, "Value": value})
+    if not rows:
+        raise FileImportError(
+            "No tables or 'Label: number' style lines were found in this PDF for charting."
+        )
+    return pd.DataFrame(rows)
+
+
+def load_pdf_generic(uploaded_file) -> pd.DataFrame:
+    """Load a PDF's best table, or fall back to label/value text lines, for charting."""
+    try:
+        import pdfplumber  # noqa: F401
+    except ImportError:
+        raise FileImportError(
+            "PDF support requires the 'pdfplumber' package. Install it with "
+            "`pip install pdfplumber` (see requirements.txt) and restart the app."
+        )
+    uploaded_file.seek(0)
+    try:
+        df = _extract_pdf_best_table(uploaded_file)
+    except Exception:
+        df = None
+    if df is not None and not df.empty:
+        return df
+
+    uploaded_file.seek(0)
+    text = _extract_pdf_text(uploaded_file)
+    return _parse_pdf_label_value(text)
+
+
+def load_any_generic(uploaded_file) -> pd.DataFrame:
+    """Load a Streamlit UploadedFile (.csv or .pdf) as a raw table for charting."""
+    filename = (getattr(uploaded_file, "name", "") or "").lower()
+    if filename.endswith(".csv"):
+        return load_csv_generic(uploaded_file)
+    if filename.endswith(".pdf"):
+        return load_pdf_generic(uploaded_file)
+    raise FileImportError("Unsupported file type — please upload a .csv or .pdf file.")

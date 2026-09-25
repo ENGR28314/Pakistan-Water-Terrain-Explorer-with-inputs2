@@ -3,15 +3,19 @@ app.py
 Pakistan Water, Terrain & Disaster-Risk Explorer
 A Streamlit dashboard covering provinces, rivers, dams/barrages, link canals,
 climatic regions, mountain ranges, national disaster-risk context, lakes,
-socio-economic & agro-economic domains, and the geo-political / strategic
-water dimension (Indus Waters Treaty, inter-provincial disputes, CPEC
-hydropower investment, and India's upstream dam-design disputes).
+deserts, forests, national parks, socio-economic & agro-economic domains, and
+the geo-political / strategic water dimension (Indus Waters Treaty,
+inter-provincial disputes, CPEC hydropower investment, and India's upstream
+dam-design disputes).
+
+Created by Engr. Syed Hassan Iqbal Shah.
 
 Run with:  streamlit run app.py
 """
 
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 import data_loader as data
 import map_view
@@ -20,7 +24,7 @@ import hydraulic_model as hm
 import file_import
 
 st.set_page_config(
-    page_title="Pakistan Water, Terrain & Disaster-Risk Explorer",
+    page_title="Pakistan Water & Terrain Explorer",
     page_icon="🇵🇰",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -39,17 +43,19 @@ SECTIONS = [
     "⛰️ Mountain Ranges",
     "🏞️ Lakes",
     "🏜️ Deserts",
+    "🌲 Forests",
+    "🌳 National Parks",
     "⚠️ Disaster Risk Context",
     "📈 Socio-Economic & Agro-Economic",
     "🗺️ Geo-Political & Strategic",
     "🇨🇳 China Hydropower (CPEC)",
-    "📐 India Upstream Dam Disputes",
+    "🇮🇳 Chenab Projects, Flow Concerns & Indus Waters Treaty",
     "🧮 Interactive Hydraulic Models",
-    "📤 Upload File → Map",
+    "📤 Upload File → Map & Charts",
     "📚 Sources",
 ]
 
-st.sidebar.title("🇵🇰")
+st.sidebar.title("🇵🇰 Navigation")
 choice = st.sidebar.radio("Go to section", SECTIONS, label_visibility="collapsed")
 st.sidebar.markdown("---")
 st.sidebar.caption(
@@ -64,12 +70,12 @@ st.sidebar.caption(
 if choice == "🏠 Overview":
     st.title("Pakistan Water, Terrain & Disaster-Risk Explorer")
     st.markdown(
-        "**An Interactive reference dashboard covering Pakistan's** **provinces**, "
+        "An interactive reference dashboard covering Pakistan's **provinces**, "
         "**river systems**, **dams/barrages/link canals**, **climatic regions**, "
-        "**mountain ranges**, **national disaster-risk context**, **lakes**, **and the** "
-        "**socio-economic, agro-economic and geo-political dimensions** **of water "
-        "management** **— including the** **Indus Waters Treaty**, **Inter-provincial disputes**, "
-        "**CPEC hydropower investment, and India's upstream dam-design disputes**."  "*****(By Engr. Syed Hassan Iqbal Shah)***** "
+        "**mountain ranges**, **national disaster-risk context**, **lakes**, and the "
+        "**socio-economic, agro-economic and geo-political dimensions** of water "
+        "management — including the Indus Waters Treaty, inter-provincial disputes, "
+        "CPEC hydropower investment, and India's upstream dam-design disputes."
     )
     st.plotly_chart(map_view.combined_overview_map(), use_container_width=True)
 
@@ -89,20 +95,29 @@ if choice == "🏠 Overview":
         "Sulaiman, Kirthar, Toba Kakar, Salt Range — peaks, geology, tourism, climbing\n"
         "- **Deserts** — Thar, Cholistan, Kharan, Thal and the Katpana cold desert, with "
         "approximate mapped extents\n"
+        "- **Forests** — main forest types (coniferous, mangrove, riverain, scrub, planted) "
+        "and notable forests with history, wildlife and attractions\n"
+        "- **National Parks** — Pakistan's national parks and major recreational parks, "
+        "with area, establishment and notes\n"
         "- **National Disaster Risk Context** — hazard profile, exposure/vulnerability, "
         "emerging risks (GLOFs, monsoon variability, sea intrusion), risk scenarios\n"
-        "- **Socio-Economic & Agro-Economic Domains** — food security, IBIS, GDP linkages\n"
+        "- **Socio-Economic & Agro-Economic Domains** — food security, IBIS, GDP linkages, "
+        "Rabi/Kharif crop calendar, apiculture and aquaculture\n"
         "- **Geo-Political & Strategic** — Kashmir hydro-politics, IWT, inter-provincial "
         "disputes (Punjab vs Sindh), IRSA/CCI legal mechanisms\n"
         "- **China's CPEC Hydropower Footprint** — Karot, Suki Kinari, Kohala, Azad Pattan\n"
-        "- **India's Upstream Dam Disputes** — Pakal Dul & Ratle technical contentions\n"
+        "- **Chenab Projects, Flow Concerns & Indus Waters Treaty** — Pakal Dul & Ratle "
+        "technical contentions, the Head Marala flow issue, and the PCA arbitration timeline\n"
         "- **Interactive Hydraulic Models** — simplified reservoir, shortage-sharing, "
-        "link-canal transfer and disaster-risk-index calculators"
+        "link-canal transfer and disaster-risk-index calculators\n"
+        "- **Upload File → Map / Charts** — bring your own CSV or PDF data and plot it as "
+        "a map, or build bar, pie, scatter and line charts from it"
     )
     st.caption(
         "Geopolitical, CPEC and dam-governance content is backed by official sources — "
         "see the **📚 Sources** section in the sidebar."
     )
+    st.caption("👤 Created by **Engr. Syed Hassan Iqbal Shah**")
 
 # ---------------------------------------------------------------------------
 # 🗺️ PROVINCES
@@ -320,6 +335,70 @@ elif choice == "🏜️ Deserts":
     st.write(d["characteristics"])
 
 # ---------------------------------------------------------------------------
+# 🌲 FORESTS
+# ---------------------------------------------------------------------------
+elif choice == "🌲 Forests":
+    st.title("Forests of Pakistan")
+
+    st.header("Main Forest Types")
+    for name, info in data.FOREST_TYPES.items():
+        with st.expander(name):
+            st.markdown(f"**Regions:** {info['regions']}")
+            st.markdown(f"**Altitude range:** {info['altitude']}")
+            st.markdown(f"**Key species:** {info['species']}")
+            st.write(info["notes"])
+
+    st.header("Notable Forests — Map")
+    st.plotly_chart(map_view.forests_map(), use_container_width=True)
+
+    st.header("Notable Forests — Details")
+    forest_name = st.selectbox("Select a forest for details", list(data.NOTABLE_FORESTS.keys()))
+    f = data.NOTABLE_FORESTS[forest_name]
+    st.subheader(forest_name)
+    st.markdown(f"**Location:** {f['location']}")
+    st.markdown(f"**Forest type:** {f['forest_type']}")
+    st.markdown(f"**Covered area:** {f['covered_area']}")
+    st.markdown("**History & Origin**")
+    st.write(f["history_origin"])
+    st.markdown("**Wildlife & Nature**")
+    st.write(f["wildlife_nature"])
+    st.markdown("**Attractions & Recreation**")
+    st.write(f["attractions_recreation"])
+
+    with st.expander("See all notable forests in a table"):
+        df = pd.DataFrame([
+            {"Forest": k, "Location": v["location"], "Type": v["forest_type"], "Covered Area": v["covered_area"]}
+            for k, v in data.NOTABLE_FORESTS.items()
+        ])
+        st.dataframe(df, use_container_width=True, hide_index=True)
+
+# ---------------------------------------------------------------------------
+# 🌳 NATIONAL PARKS
+# ---------------------------------------------------------------------------
+elif choice == "🌳 National Parks":
+    st.title("National Parks & Major Recreational Parks of Pakistan")
+    st.caption(
+        "Not every entry below is an IUCN/provincially-notified national park — several are large municipal "
+        "or cantonment recreational parks that are commonly called 'parks' locally. This is noted per entry."
+    )
+    st.plotly_chart(map_view.national_parks_map(), use_container_width=True)
+
+    df = pd.DataFrame([
+        {"Park": k, "Province": v["province"], "Type": v["type"], "Area": v["area"], "Established": v["established"]}
+        for k, v in data.NATIONAL_PARKS.items()
+    ])
+    st.dataframe(df, use_container_width=True, hide_index=True)
+
+    park_name = st.selectbox("Select a park for details", list(data.NATIONAL_PARKS.keys()))
+    p = data.NATIONAL_PARKS[park_name]
+    st.subheader(park_name)
+    st.markdown(f"**Province / Region:** {p['province']}")
+    st.markdown(f"**Type:** {p['type']}")
+    st.markdown(f"**Area:** {p['area']}")
+    st.markdown(f"**Established:** {p['established']}")
+    st.write(p["notes"])
+
+# ---------------------------------------------------------------------------
 # ⚠️ DISASTER RISK CONTEXT
 # ---------------------------------------------------------------------------
 elif choice == "⚠️ Disaster Risk Context":
@@ -409,6 +488,30 @@ elif choice == "📈 Socio-Economic & Agro-Economic":
     for k, v in data.AGRO_ECONOMIC_DOMAIN.items():
         st.markdown(f"**{k}:** {v}")
 
+    st.header("🗓️ Major Crop Seasons — Rabi & Kharif")
+    season_tabs = st.tabs(list(data.CROP_SEASONS.keys()))
+    for tab, (season_name, season) in zip(season_tabs, data.CROP_SEASONS.items()):
+        with tab:
+            c1, c2 = st.columns(2)
+            c1.metric("Sowing window", season["sowing_window"])
+            c2.metric("Harvest window", season["harvest_window"])
+            st.write(season["description"])
+            st.markdown("**Major crops:**")
+            for crop, desc in season["major_crops"].items():
+                st.markdown(f"- **{crop}:** {desc}")
+
+    st.header("🐝🐟 Allied Agriculture Sectors")
+    sector_cols = st.columns(2)
+    for col, (sector_name, sector) in zip(sector_cols, data.ALLIED_AGRI_SECTORS.items()):
+        with col:
+            st.subheader(sector_name)
+            st.write(sector["overview"])
+            st.markdown(f"**Key regions:** {sector['key_regions']}")
+            if "species" in sector:
+                st.markdown(f"**Species:** {sector['species']}")
+            st.markdown(f"**Economic role:** {sector['economic_role']}")
+            st.markdown(f"**Challenges:** {sector['challenges']}")
+
 # ---------------------------------------------------------------------------
 # 🗺️ GEO-POLITICAL & STRATEGIC
 # ---------------------------------------------------------------------------
@@ -474,14 +577,16 @@ elif choice == "🇨🇳 China Hydropower (CPEC)":
             st.markdown(f"- [{ref['label']}]({ref['url']})")
 
 # ---------------------------------------------------------------------------
-# 📐 INDIA UPSTREAM DAM DISPUTES
+# 🇮🇳 CHENAB PROJECTS, FLOW CONCERNS & INDUS WATERS TREATY
 # ---------------------------------------------------------------------------
-elif choice == "📐 India Upstream Dam Disputes":
-    st.title("Objectionable Technical Designs of India's Pakal Dul & Ratle Dams")
+elif choice == "🇮🇳 Chenab Projects, Flow Concerns & Indus Waters Treaty":
+    st.title("🇮🇳 Chenab Projects, Flow Concerns and Indus Waters Treaty")
     st.plotly_chart(map_view.india_dam_disputes_map(), use_container_width=True)
 
     dd = data.INDIA_DAM_DESIGN_DISPUTES
+    tp = dd["technical_points_of_contention"]
 
+    st.header("Pakal Dul (1,000 MW) and Ratle (850 MW)")
     c1, c2 = st.columns(2)
     with c1:
         st.subheader("Pakal Dul Dam")
@@ -494,15 +599,23 @@ elif choice == "📐 India Upstream Dam Disputes":
         st.markdown(f"**River:** {dd['Ratle Dam']['river']}")
         st.markdown(f"**Location:** {dd['Ratle Dam']['location']}")
 
-    st.header("Technical Points of Contention")
-    tp = dd["technical_points_of_contention"]
+    st.header("Technical points raised by Pakistan in the IWT proceedings")
     for topic in ["Pondage Capacity", "Freeboard Height & Dam Elevation", "Deep-Level Outlets and Gated Spillways"]:
         with st.expander(topic):
             st.markdown(f"**The issue:** {tp[topic]['issue']}")
             st.markdown(f"**Pakistan's view:** {tp[topic]['pakistan_view']}")
 
-    st.subheader("Court of Arbitration (CoA) Interventions")
-    st.write(tp["Court of Arbitration (CoA) Interventions"])
+    st.header("Head Marala / crop-impact issue")
+    hm_dispute = data.INTERNAL_WATER_DISPUTES["Environmental Impacts of Indian Chenab Projects on Punjab's Crops"]
+    st.markdown(f"**Flow reductions reported at Head Marala:** {hm_dispute['Flow Reductions at Head Marala']}")
+    st.markdown(f"**Reported crop impacts:** {hm_dispute['Devastating Crop Impacts']}")
+    st.info(data.HEAD_MARALA_NOTE)
+
+    st.header("Court of Arbitration (PCA) timeline")
+    st.caption("Indus Waters Western Rivers Arbitration (Islamic Republic of Pakistan v. Republic of India), PCA Case No. 2023-01")
+    for item in data.PCA_TIMELINE:
+        with st.expander(f"{item['date']} — {item['event']}"):
+            st.write(item["detail"])
 
     with st.expander("📚 Sources for this section"):
         for ref in data.SOURCES["Indus Waters Treaty & Arbitration"]:
@@ -597,23 +710,25 @@ elif choice == "🧮 Interactive Hydraulic Models":
         st.markdown(f"### {band_colors.get(band, '')} Risk Band: **{band}**")
 
 # ---------------------------------------------------------------------------
-# 📤 UPLOAD FILE → MAP
+# 📤 UPLOAD FILE → MAP & CHARTS
 # ---------------------------------------------------------------------------
-elif choice == "📤 Upload File → Map":
-    st.title("Upload Your Own Data → Map")
+elif choice == "📤 Upload File → Map & Charts":
+    st.title("Upload Your Own Data → Map & Charts")
     st.caption(
-        "Upload a CSV or PDF with location data and it will be plotted on an "
-        "interactive map — no coding required."
+        "Upload a CSV or PDF and turn it into an interactive map, or a bar, pie, "
+        "scatter or line chart — no coding required."
     )
     with st.expander("📋 Expected file format", expanded=False):
         st.markdown(
-            "**CSV:** a table with latitude/longitude columns, using headers such as "
-            "`lat`/`latitude` and `lon`/`longitude` (or `lng`, `x`, `y`). An optional "
-            "`name` (or `label`/`place`/`site`) column is used for point labels, and an "
-            "optional `category` (or `type`/`group`) column will color-code the points.\n\n"
-            "**PDF:** either a table using the same kind of column headers, or plain text "
-            "containing coordinate pairs on their own lines, e.g. `Site A: 31.52, 74.35` "
-            "or `31.52N, 74.35E`."
+            "**For the Map tab:** a table with latitude/longitude columns, using headers "
+            "such as `lat`/`latitude` and `lon`/`longitude` (or `lng`, `x`, `y`). An "
+            "optional `name` (or `label`/`place`/`site`) column labels the points, and an "
+            "optional `category` (or `type`/`group`) column color-codes them. In a PDF, "
+            "either a table with the same kind of columns, or plain text with coordinate "
+            "pairs on their own lines (e.g. `Site A: 31.52, 74.35`).\n\n"
+            "**For the Charts tab:** any CSV table works — just pick which columns to "
+            "chart. In a PDF, either a table, or lines like `Wheat: 25000` (label/number "
+            "pairs), which is common in simple report summaries."
         )
         example_df = pd.DataFrame({
             "name": ["Islamabad", "Karachi", "Lahore"],
@@ -632,35 +747,99 @@ elif choice == "📤 Upload File → Map":
     uploaded_file = st.file_uploader("Choose a CSV or PDF file", type=["csv", "pdf"])
 
     if uploaded_file is not None:
-        try:
-            df_points = file_import.load_any(uploaded_file)
-        except file_import.FileImportError as e:
-            st.error(str(e))
-        else:
-            st.success(f"Parsed {len(df_points)} location(s) from **{uploaded_file.name}**.")
+        tab_map, tab_charts = st.tabs(["🗺️ Map", "📊 Charts"])
+
+        with tab_map:
+            try:
+                uploaded_file.seek(0)
+            except Exception:
+                pass
+            try:
+                df_points = file_import.load_any(uploaded_file)
+            except file_import.FileImportError as e:
+                st.info(f"Couldn't plot this file as a map: {e}")
+            else:
+                st.success(f"Parsed {len(df_points)} location(s) from **{uploaded_file.name}**.")
+                st.plotly_chart(
+                    map_view.custom_points_map(df_points, title=f"Map — {uploaded_file.name}"),
+                    use_container_width=True,
+                )
+                st.dataframe(df_points, use_container_width=True, hide_index=True)
+                st.download_button(
+                    "Download parsed data as CSV",
+                    df_points.to_csv(index=False).encode("utf-8"),
+                    file_name="parsed_locations.csv",
+                    mime="text/csv",
+                    key="download_map_csv",
+                )
+
+        with tab_charts:
+            try:
+                uploaded_file.seek(0)
+            except Exception:
+                pass
+            try:
+                df_raw = file_import.load_any_generic(uploaded_file)
+            except file_import.FileImportError as e:
+                st.error(str(e))
+            else:
+                st.success(f"Parsed a {df_raw.shape[0]}×{df_raw.shape[1]} table from **{uploaded_file.name}**.")
+                st.dataframe(df_raw, use_container_width=True, hide_index=True)
+
+                all_cols = list(df_raw.columns)
+                numeric_cols = df_raw.select_dtypes(include="number").columns.tolist()
+                if not numeric_cols:
+                    coerced = df_raw.apply(pd.to_numeric, errors="coerce")
+                    numeric_cols = [c for c in coerced.columns if coerced[c].notna().any()]
+
+                chart_type = st.selectbox("Chart type", ["Bar", "Pie", "Scatter", "Line"])
+
+                if chart_type == "Bar":
+                    x_col = st.selectbox("Category / X axis", all_cols, key="bar_x")
+                    y_col = st.selectbox("Value / Y axis", numeric_cols or all_cols, key="bar_y")
+                    fig = px.bar(df_raw, x=x_col, y=y_col, title=f"{y_col} by {x_col}")
+                elif chart_type == "Pie":
+                    names_col = st.selectbox("Labels", all_cols, key="pie_names")
+                    values_col = st.selectbox("Values", numeric_cols or all_cols, key="pie_values")
+                    fig = px.pie(df_raw, names=names_col, values=values_col, title=f"{values_col} share by {names_col}")
+                elif chart_type == "Scatter":
+                    x_col = st.selectbox("X axis", numeric_cols or all_cols, key="scatter_x")
+                    y_col = st.selectbox("Y axis", numeric_cols or all_cols, key="scatter_y")
+                    color_choice = st.selectbox("Color by (optional)", ["None"] + all_cols, key="scatter_color")
+                    fig = px.scatter(
+                        df_raw, x=x_col, y=y_col,
+                        color=None if color_choice == "None" else color_choice,
+                        title=f"{y_col} vs {x_col}",
+                    )
+                else:  # Line
+                    x_col = st.selectbox("X axis", all_cols, key="line_x")
+                    y_col = st.selectbox("Y axis", numeric_cols or all_cols, key="line_y")
+                    fig = px.line(df_raw, x=x_col, y=y_col, title=f"{y_col} over {x_col}", markers=True)
+
+                st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No file uploaded yet — showing example data below.")
+        map_tab, chart_tab = st.tabs(["🗺️ Map example", "📊 Chart example"])
+        with map_tab:
+            example_df = pd.DataFrame({
+                "Name": ["Islamabad", "Karachi", "Lahore"],
+                "Latitude": [33.70, 24.86, 31.55],
+                "Longitude": [73.10, 67.01, 74.35],
+                "Category": ["Capital", "Port City", "Capital"],
+            })
             st.plotly_chart(
-                map_view.custom_points_map(df_points, title=f"Map — {uploaded_file.name}"),
+                map_view.custom_points_map(example_df, title="Example — Pakistani Cities"),
                 use_container_width=True,
             )
-            st.dataframe(df_points, use_container_width=True, hide_index=True)
-            st.download_button(
-                "Download parsed data as CSV",
-                df_points.to_csv(index=False).encode("utf-8"),
-                file_name="parsed_locations.csv",
-                mime="text/csv",
+        with chart_tab:
+            example_chart_df = pd.DataFrame({
+                "Crop": ["Wheat", "Cotton", "Rice", "Sugarcane", "Maize"],
+                "Area (000 ha)": [9000, 2100, 2800, 1050, 1500],
+            })
+            st.plotly_chart(
+                px.bar(example_chart_df, x="Crop", y="Area (000 ha)", title="Example — Crop Area"),
+                use_container_width=True,
             )
-    else:
-        st.info("No file uploaded yet — showing the example data above on a map.")
-        example_df = pd.DataFrame({
-            "Name": ["Islamabad", "Karachi", "Lahore"],
-            "Latitude": [33.70, 24.86, 31.55],
-            "Longitude": [73.10, 67.01, 74.35],
-            "Category": ["Capital", "Port City", "Capital"],
-        })
-        st.plotly_chart(
-            map_view.custom_points_map(example_df, title="Example — Pakistani Cities"),
-            use_container_width=True,
-        )
 
 # ---------------------------------------------------------------------------
 # 📚 SOURCES
@@ -680,3 +859,4 @@ elif choice == "📚 Sources":
 
 st.sidebar.markdown("---")
 st.sidebar.caption("Built with Streamlit · Plotly · NetworkX")
+st.sidebar.caption("👤 Created by **Engr. Syed Hassan Iqbal Shah**")

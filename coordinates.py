@@ -227,3 +227,45 @@ CONFLUENCE_COORDS = {
     "Swat \u2192 Kabul River (Charsadda)": {"lat": 34.15, "lon": 71.74},
     "Hunza \u2192 Gilgit River (near Gilgit town)": {"lat": 35.92, "lon": 74.31},
 }
+
+# ---------------------------------------------------------------------------
+# Notable forests — representative point locations
+# ---------------------------------------------------------------------------
+NOTABLE_FOREST_COORDS = {
+    "Changa Manga Forest": {"lat": 31.083, "lon": 73.967, "province": "Punjab"},
+    "Ziarat Juniper Forest": {"lat": 30.363, "lon": 68.158, "province": "Balochistan"},
+    "Ushu Forest": {"lat": 35.62, "lon": 72.62, "province": "Khyber Pakhtunkhwa"},
+    "Dir Forest (Kumrat Valley)": {"lat": 35.34, "lon": 72.02, "province": "Khyber Pakhtunkhwa"},
+    "Soon Valley Forest": {"lat": 32.50, "lon": 71.90, "province": "Punjab"},
+    "Mukshpuri Forest": {"lat": 34.08, "lon": 73.40, "province": "Khyber Pakhtunkhwa"},
+    "Rama Meadows Forest": {"lat": 35.35, "lon": 74.65, "province": "Gilgit-Baltistan"},
+    "Kalam Forest": {"lat": 35.486, "lon": 72.579, "province": "Khyber Pakhtunkhwa"},
+    "Chitral Forests": {"lat": 35.933, "lon": 71.667, "province": "Khyber Pakhtunkhwa"},
+    "Margalla Hills Scrub Forests": {"lat": 33.731, "lon": 72.937, "province": "Islamabad Capital Territory"},
+}
+
+# ---------------------------------------------------------------------------
+# National parks & major recreational parks — representative point locations
+# ---------------------------------------------------------------------------
+NATIONAL_PARK_COORDS = {
+    "Ayub National Park": {"lat": 33.60, "lon": 73.07, "province": "Punjab"},
+    "Jallo Park, Lahore": {"lat": 31.5725, "lon": 74.47722, "province": "Punjab"},
+    "Lulusar-Dudipatsar National Park": {"lat": 34.90, "lon": 73.85, "province": "Khyber Pakhtunkhwa"},
+    "Lal Suhanra National Park": {"lat": 29.317, "lon": 71.917, "province": "Punjab"},
+    "Kirthar National Park": {"lat": 25.700, "lon": 67.583, "province": "Sindh"},
+    "Khunjerab National Park": {"lat": 36.40, "lon": 75.40, "province": "Gilgit-Baltistan"},
+    "City Park, Multan": {"lat": 30.1575, "lon": 71.5249, "province": "Punjab"},
+    "Kashmir Park, DHA Multan": {"lat": 30.20, "lon": 71.48, "province": "Punjab"},
+    "Chitral Gol National Park": {"lat": 35.933, "lon": 71.667, "province": "Khyber Pakhtunkhwa"},
+    "Chaman Zar-e-Askari Park, Multan": {"lat": 30.1978, "lon": 71.4696, "province": "Punjab"},
+    "Jinnah Park": {"lat": 33.71, "lon": 73.05, "province": "Islamabad Capital Territory"},
+    "Hingol National Park": {"lat": 25.50, "lon": 65.40, "province": "Balochistan"},
+    "Shakarparian National Park": {"lat": 33.696, "lon": 73.076, "province": "Islamabad Capital Territory"},
+    "Faisal Park, Mumtazabad": {"lat": 30.15, "lon": 71.52, "province": "Punjab"},
+    "Pir Lasura National Park": {"lat": 33.28, "lon": 74.06, "province": "Azad Jammu & Kashmir"},
+    "Hazarganji-Chiltan National Park": {"lat": 30.22, "lon": 66.73, "province": "Balochistan"},
+    "Pakistan Park": {"lat": 31.52, "lon": 74.36, "province": "Punjab"},
+    "Machiara National Park": {"lat": 34.53, "lon": 73.63, "province": "Azad Jammu & Kashmir"},
+    "Rajana Forest / Bhagat Wildlife Park": {"lat": 30.87, "lon": 72.53, "province": "Punjab"},
+    "Margalla Hills National Park": {"lat": 33.731, "lon": 72.937, "province": "Islamabad Capital Territory"},
+}

@@ -2,10 +2,12 @@
 
 An interactive Streamlit dashboard covering Pakistan's provinces, river
 systems, dams/barrages/link canals, climatic regions, mountain ranges,
-national disaster-risk context, lakes, and the socio-economic, agro-economic
-and geo-political dimensions of water management — including the Indus
-Waters Treaty, inter-provincial disputes, CPEC hydropower investment, and
-India's upstream dam-design disputes.
+lakes, deserts, forests, national parks, national disaster-risk context, and
+the socio-economic, agro-economic and geo-political dimensions of water
+management — including the Indus Waters Treaty, inter-provincial disputes,
+CPEC hydropower investment, and India's upstream dam-design disputes.
+
+Created by **Engr. Syed Hassan Iqbal Shah**.
 
 ## Features
 
@@ -26,29 +28,43 @@ India's upstream dam-design disputes.
 - **Lakes** — major lakes across provinces with formation type.
 - **Deserts** — Thar, Cholistan, Kharan, Thal, and the Katpana cold desert,
   with province, approximate area, type, and mapped extents.
+- **Forests** — the five main forest types (coniferous, mangrove, riverain/
+  bela, tropical thorn/scrub, irrigated/planted), plus notable forests
+  (Changa Manga, Ziarat Juniper, Ushu, Dir/Kumrat, Soon Valley, Mukshpuri,
+  Rama Meadows, Kalam, Chitral, Margalla Hills scrub, etc.) with location,
+  covered area, history & origin, wildlife & nature, and attractions.
+- **National Parks** — Ayub, Jallo Park, Lulusar-Dudipatsar, Lal Suhanra,
+  Kirthar, Khunjerab, Chitral Gol, Hingol, Shakarparian, Pir Lasura,
+  Hazarganji-Chiltan, Machiara, Margalla Hills, Rajana/Bhagat Wildlife
+  Park, and several municipal recreational parks in Multan/Lahore/
+  Islamabad — with province, area, establishment and notes.
 - **National Disaster Risk Context** — hazard profile (hydro-meteorological,
   tectonic, climatological/emerging, anthropogenic), exposure & vulnerability
   assessment, emerging risks (GLOFs, erratic monsoons, sea intrusion), and
   baseline / medium / worst-case risk scenarios.
 - **Socio-Economic & Agro-Economic Domains** — food security, employment,
-  urban growth, tourism, the Indus Basin Irrigation System, GDP linkages.
+  urban growth, tourism, the Indus Basin Irrigation System, GDP linkages,
+  the Rabi/Kharif crop-season calendar with major crop types, and allied
+  agriculture sectors (apiculture and aquaculture).
 - **Geo-Political & Strategic Domains** — Kashmir hydro-politics, the Indus
   Waters Treaty, maritime trade infrastructure, Punjab-vs-Sindh internal
   water disputes, and IRSA/CCI/Supreme Court legal mechanisms.
 - **China's CPEC Hydropower Footprint** — Karot, Suki Kinari, Kohala, Azad
   Pattan, with a portfolio network diagram.
-- **India's Upstream Dam Disputes** — Pakal Dul & Ratle dam technical
-  contentions (pondage, freeboard, spillway design) and Court of Arbitration
-  interventions.
+- **Chenab Projects, Flow Concerns & Indus Waters Treaty** — Pakal Dul
+  (1,000 MW) and Ratle (850 MW) technical contentions (pondage, freeboard,
+  spillway design) Pakistan has raised in IWT proceedings; the Head Marala
+  flow/crop-impact issue (reported as stakeholder claims, not asserted as a
+  causal crop-loss estimate); and a dated Court of Arbitration (PCA)
+  timeline.
 - **Interactive Hydraulic Models** — simplified reservoir mass-balance
   simulation, shortage-sharing allocation, link-canal transfer calculator,
   and a composite disaster-risk-index tool.
-- **Upload File → Map** — upload your own **CSV or PDF** of location data and
-  the app plots it on an interactive map. CSVs need recognizable
-  latitude/longitude columns (`lat`/`lon`, `latitude`/`longitude`, etc.), with
-  optional `name` and `category` columns; PDFs work either as a table with
-  the same kind of columns, or as plain text containing coordinate pairs
-  (e.g. `Site A: 31.52, 74.35`).
+- **Upload File → Map & Charts** — upload your own **CSV or PDF** and either
+  plot it on an interactive map (needs recognizable latitude/longitude
+  columns) or build a **bar, pie, scatter or line chart** from any of its
+  columns. PDFs work via table extraction, with a text-based fallback (
+  coordinate pairs for the map, `Label: value` lines for charts).
 
 ## Project structure
 
@@ -56,13 +72,14 @@ India's upstream dam-design disputes.
 .
 ├── app.py                # Main Streamlit application (page/section routing)
 ├── data_loader.py         # All curated reference data (provinces, rivers, dams,
-│                           # canals, climate, mountains, disaster risk, lakes,
-│                           # socio-economic, geo-political, CPEC, India disputes)
+│                           # canals, climate, mountains, lakes, deserts, forests,
+│                           # national parks, disaster risk, socio-economic/agro-
+│                           # economic, geo-political, CPEC, India dam disputes)
 ├── coordinates.py         # Lat/lon reference data used for mapping
 ├── map_view.py             # Plotly geographic map builders
 ├── network_view.py         # NetworkX + Plotly schematic network diagrams
 ├── hydraulic_model.py       # Simplified interactive hydraulic/risk models
-├── file_import.py           # CSV/PDF → lat/lon DataFrame parsing (Upload File → Map tab)
+├── file_import.py           # CSV/PDF → DataFrame parsing (Upload File → Map & Charts tab)
 ├── requirements.txt
 ├── .gitignore
 └── README.md

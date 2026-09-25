@@ -797,6 +797,82 @@ AGRO_ECONOMIC_DOMAIN = {
 }
 
 # ---------------------------------------------------------------------------
+# 9B. MAJOR CROP SEASONS — RABI & KHARIF
+# ---------------------------------------------------------------------------
+CROP_SEASONS = {
+    "Rabi (Winter) Season": {
+        "sowing_window": "October – December",
+        "harvest_window": "March – May",
+        "description": (
+            "Pakistan's winter cropping season, sown after the monsoon using stored canal/reservoir water and "
+            "residual soil moisture, and harvested before the summer heat and monsoon onset."
+        ),
+        "major_crops": {
+            "Wheat": "The dominant Rabi staple and Pakistan's most important food crop, grown mainly across Punjab and Sindh's canal commands.",
+            "Gram (Chickpea)": "A major Rabi pulse, largely rain-fed/'barani' in Punjab's Thal and Potohar tracts and parts of Balochistan.",
+            "Lentil (Masoor)": "Grown on a smaller area alongside gram as a Rabi pulse crop.",
+            "Barley": "Grown in marginal and rain-fed areas, including parts of Punjab and Balochistan.",
+            "Mustard / Rapeseed (Canola)": "A Rabi oilseed crop grown across Punjab and Sindh to supply the edible-oil industry.",
+            "Tobacco (Rabi crop in KPK)": "Grown mainly in Khyber Pakhtunkhwa's Swabi, Mardan and Buner districts.",
+            "Potato (autumn/Rabi crop)": "Grown as an autumn/Rabi crop in Punjab in addition to its main spring season.",
+        },
+    },
+    "Kharif (Summer/Monsoon) Season": {
+        "sowing_window": "April – June",
+        "harvest_window": "October – December",
+        "description": (
+            "Pakistan's summer/monsoon cropping season, sown ahead of or during the monsoon and relying heavily "
+            "on peak-season canal supplies from the Indus system."
+        ),
+        "major_crops": {
+            "Cotton": "A key Kharif cash crop and the backbone of Pakistan's textile export industry, concentrated in Punjab and Sindh.",
+            "Rice": "Grown in the canal commands of Punjab (notably basmati in the Kalar tract) and Sindh; a major export earner.",
+            "Sugarcane": "A water-intensive Kharif cash crop grown across Punjab, Sindh and parts of KPK, feeding the domestic sugar industry.",
+            "Maize (Corn)": "Grown mainly in Punjab (Chiniot, Sahiwal belt) and Khyber Pakhtunkhwa, for both food and feed use.",
+            "Bajra (Pearl Millet)": "A drought-tolerant Kharif staple grown chiefly on rain-fed land in Sindh and southern Punjab.",
+            "Jowar (Sorghum)": "Grown as a Kharif fodder and grain crop, mostly rain-fed, in Punjab and Sindh.",
+            "Groundnut": "A Kharif oilseed grown mainly on the rain-fed Potohar Plateau of Punjab.",
+        },
+    },
+}
+
+# ---------------------------------------------------------------------------
+# 9C. ALLIED AGRICULTURE SECTORS — APICULTURE & AQUACULTURE
+# ---------------------------------------------------------------------------
+ALLIED_AGRI_SECTORS = {
+    "Apiculture (Beekeeping)": {
+        "overview": (
+            "A growing allied sub-sector built mainly around the European honeybee (Apis mellifera), "
+            "introduced alongside the native Apis cerana and Apis florea, providing rural income, honey "
+            "production and crop-pollination services."
+        ),
+        "key_regions": "Khyber Pakhtunkhwa (Malakand, Swat, Mansehra), Punjab (Potohar and canal-irrigated districts), and parts of Azad Jammu & Kashmir and Balochistan.",
+        "economic_role": (
+            "Supports smallholder and migratory beekeeping enterprises producing honey for domestic consumption "
+            "and export, and improves yields in pollination-dependent crops such as mustard, sunflower and fruit orchards."
+        ),
+        "challenges": "Pesticide exposure, habitat/floral loss, disease and parasite pressure (e.g. Varroa mites), and climate variability affecting bloom timing.",
+    },
+    "Aquaculture & Fisheries": {
+        "overview": (
+            "Encompasses freshwater fish farming fed by the canal/reservoir network, brackish-water/coastal "
+            "shrimp and fish farming, and cold-water trout farming in the northern mountain streams."
+        ),
+        "key_regions": (
+            "Freshwater carp culture is concentrated in Punjab and Sindh (fed by canals and reservoirs such as "
+            "Tarbela and Mangla); brackish-water shrimp and fish farming occurs along the Sindh and Balochistan "
+            "coast and in the Indus Delta; trout farming is practiced in the cold streams of KPK, GB and AJK."
+        ),
+        "species": "Major carps (rohu, catla, mrigal) in freshwater ponds; shrimp/prawn and marine fish species along the coast; rainbow and brown trout in northern hatcheries.",
+        "economic_role": (
+            "A source of rural livelihoods and protein supply, and a modest but growing export sector "
+            "(particularly seafood/shrimp), though it remains far smaller than crop agriculture in overall GDP share."
+        ),
+        "challenges": "Reduced freshwater/silt inflow to the Indus Delta affecting coastal fisheries and mangrove nurseries, water quality, and limited adoption of modern hatchery and feed technology.",
+    },
+}
+
+# ---------------------------------------------------------------------------
 # 10. GEO-POLITICAL & STRATEGIC DOMAINS
 # ---------------------------------------------------------------------------
 GEOPOLITICAL_DOMAIN = {
@@ -956,3 +1032,403 @@ SOURCES = {
         },
     ],
 }
+
+# ---------------------------------------------------------------------------
+# 14. FORESTS OF PAKISTAN
+# ---------------------------------------------------------------------------
+FOREST_TYPES = {
+    "Coniferous Forests": {
+        "regions": "Northern mountainous areas of Khyber Pakhtunkhwa and Gilgit-Baltistan (Swat, Dir, Kaghan, Chitral, Hazara)",
+        "altitude": "1,000 to 4,000 meters",
+        "species": "Pine (chir pine, blue pine), fir (pindrow fir), spruce and deodar — Pakistan's national tree",
+        "notes": (
+            "Pakistan's largest natural forest category by area, forming the backbone of the country's timber "
+            "and watershed-protection resources; zoned by altitude from chir pine at lower elevations to fir "
+            "and spruce near the timberline."
+        ),
+    },
+    "Mangrove Forests": {
+        "regions": "Coastal wetlands of the Indus Delta near Karachi (Sindh) and the Balochistan coast, along the Arabian Sea",
+        "altitude": "Sea level (tidal creeks and delta)",
+        "species": "Predominantly grey/white mangrove (Avicennia marina), with small stands of other species",
+        "notes": (
+            "Among the largest arid-climate mangrove ecosystems in the world; protect the coastline from erosion "
+            "and storm surge, support fisheries and shrimp nurseries, but face pressure from reduced freshwater "
+            "and silt inflow from the Indus and from coastal urbanization."
+        ),
+    },
+    "Riverain (Bela) Forests": {
+        "regions": "Narrow strips along the active floodplain (\"bela\") of the Indus River and its tributaries, chiefly in Punjab and Sindh",
+        "altitude": "Lowland floodplain",
+        "species": "Sheesham (Dalbergia sissoo), kikar/babul (Acacia nilotica), tamarisk and reed beds",
+        "notes": (
+            "Dependent on seasonal Indus flooding to regenerate; provide fuelwood, fodder and habitat corridors "
+            "along the river, but have shrunk with upstream flow regulation, barrages and encroachment."
+        ),
+    },
+    "Tropical Thorn (Scrub) Forests": {
+        "regions": "Low-lying plains and semi-arid flatlands of Punjab and Sindh, including the Potohar Plateau and parts of the Salt Range",
+        "altitude": "Plains (roughly 200–500 m)",
+        "species": "Acacia (kikar), Prosopis (jand/mesquite), Capparis (karir) and other drought-tolerant thorny shrubs and small trees",
+        "notes": (
+            "Open, sparse woodland adapted to low and erratic rainfall; historically grazed and cut for fuelwood, "
+            "making it one of the more degraded forest types by area."
+        ),
+    },
+    "Irrigated / Planted Forests": {
+        "regions": "Man-made plantations on canal-irrigated land in Punjab and Sindh, most famously Changa Manga near Lahore",
+        "altitude": "Plains",
+        "species": "Sheesham (Dalbergia sissoo), mulberry (Morus alba), kikar (Acacia nilotica), eucalyptus",
+        "notes": (
+            "Established from the mid-19th century onward — beginning with Changa Manga in 1866 — chiefly to "
+            "meet railway-sleeper and general timber demand; among the world's oldest large-scale hand-planted "
+            "forests, now also serving as wildlife reserves and recreation sites."
+        ),
+    },
+}
+
+NOTABLE_FORESTS = {
+    "Changa Manga Forest": {
+        "location": "Kasur and Lahore districts, Punjab (~70–80 km southwest of Lahore, off the N-5 near Chunian/Bhai Pheru)",
+        "forest_type": "Irrigated / Planted Forest",
+        "covered_area": "About 5,065 hectares (12,500 acres) today, down from a peak of around 8,400 acres originally afforested and later expanded",
+        "history_origin": (
+            "Planted from 1866 under the British Raj on the recommendation of Dr John Lindsay Stewart, Punjab's "
+            "first Conservator of Forests, to supply fuel and timber (sleepers) for the North-Western Railway. "
+            "Using a trench-and-ridge irrigation system devised by C. F. Amery and refined by Inspector-General "
+            "B. Ribbentrop, it became one of the world's largest and oldest hand-planted forests, once served by "
+            "its own narrow-gauge logging railway (from 1870)."
+        ),
+        "wildlife_nature": (
+            "Sheesham, kikar and mulberry plantations support around 14 mammal species (hog deer, jackal, "
+            "wild boar, nilgai), roughly 50 bird species including peafowl and vultures, plus reptiles and "
+            "amphibians; illegal logging has reduced its extent from its historic peak."
+        ),
+        "attractions_recreation": (
+            "A popular day-trip destination from Lahore for picnicking, cycling and camping, with a small "
+            "heritage narrow-gauge railway, lakes, and a wildlife-breeding area."
+        ),
+    },
+    "Ziarat Juniper Forest": {
+        "location": "Ziarat Valley and Mount Zarghoon, Balochistan (about 3 hours from Quetta)",
+        "forest_type": "Coniferous Forest (dry temperate juniper)",
+        "covered_area": "Roughly 110,000 hectares (some estimates put the wider biosphere reserve near 247,000 acres)",
+        "history_origin": (
+            "Pakistan's largest contiguous juniper (Juniperus excelsa) forest and believed to be the second-"
+            "largest juniper forest in the world after California's; some trees are estimated at over 1,500 "
+            "years old (some claims run into the thousands). Designated a UNESCO Biosphere Reserve in 2013 and "
+            "on Pakistan's tentative UNESCO World Heritage list since 2016."
+        ),
+        "wildlife_nature": (
+            "Slow-growing juniper stands between about 1,180 and 3,490 meters elevation host the Himalayan "
+            "black bear, markhor and a range of birds; the forest is a globally significant carbon sink but "
+            "faces threats from climate change, grazing pressure, illegal cutting and disease."
+        ),
+        "attractions_recreation": (
+            "Hiking among centuries-old 'living fossil' junipers, cool highland scenery, and proximity to "
+            "Ziarat's Quaid-e-Azam Residency; best visited April–October."
+        ),
+    },
+    "Ushu Forest": {
+        "location": "Ushu (Usho) Valley, north of Kalam, Upper Swat District, Khyber Pakhtunkhwa",
+        "forest_type": "Coniferous Forest",
+        "covered_area": "Roughly 18,000 hectares",
+        "history_origin": (
+            "A dense natural coniferous forest along the Ushu Khwar river valley, historically used for timber "
+            "and grazing by local Swati communities; it lies on the route between Kalam town and Mahodand Lake."
+        ),
+        "wildlife_nature": (
+            "Dominated by deodar (Pakistan's national tree), blue pine and spruce, with wild rose, juniper and "
+            "Himalayan yew understorey; home to elusive species such as musk deer, Himalayan black bear, red "
+            "fox and birds including woodpeckers and the Himalayan monal."
+        ),
+        "attractions_recreation": (
+            "Trekking routes including the multi-day Ushu Glacier trek, riverside camping and picnicking, and "
+            "the scenic drive/hike onward to Mahodand Lake."
+        ),
+    },
+    "Dir Forest (Kumrat Valley)": {
+        "location": "Upper Dir District, Khyber Pakhtunkhwa (Kumrat Valley, along the Panjkora River)",
+        "forest_type": "Coniferous Forest",
+        "covered_area": "Extensive valley-floor and slope forest along the Panjkora River (exact hectarage not consistently documented)",
+        "history_origin": (
+            "Part of the historic Dir Kohistan forest tracts long managed for timber under the former State of "
+            "Dir and, since 1969, Khyber Pakhtunkhwa's forest administration; the Kumrat Valley has become one "
+            "of the province's fastest-growing tourist destinations in recent years."
+        ),
+        "wildlife_nature": (
+            "Towering deodar stands on the valley floor give way to blue pine and West Himalayan fir higher up, "
+            "with oak forest in the lower valley; wildlife includes the Asiatic black bear, gray wolf, red fox, "
+            "yellow-throated marten and Kashmir musk deer."
+        ),
+        "attractions_recreation": (
+            "Waterfalls, the Kala Chashma (Black Spring), riverside camping on the Panjkora, and 4x4 jeep tracks "
+            "drawing roughly a million summer visitors to the wider Kumrat area."
+        ),
+    },
+    "Soon Valley Forest": {
+        "location": "Khushab District, Punjab (Salt Range, around Sakesar peak)",
+        "forest_type": "Sub-tropical scrub / dry forest",
+        "covered_area": "Valley spans about 780 km² (56 km long, ~14 km wide); forest cover concentrated on the surrounding Salt Range hills",
+        "history_origin": (
+            "A historic Salt Range valley long settled by the Janjua and Awan communities; its slopes were "
+            "progressively afforested and protected around the Sakesar ridge, the highest point in the Salt "
+            "Range at 1,525 m."
+        ),
+        "wildlife_nature": (
+            "The valley's Uchhali, Khabeki and Jahlar lakes form the Ramsar-listed Uchhali Complex wetland, "
+            "wintering ground for thousands of migratory waterfowl including the rare white-headed duck; forested "
+            "slopes shelter chinkara, wild boar and a variety of birdlife."
+        ),
+        "attractions_recreation": (
+            "Boating and birdwatching at Uchhali and Khabeki lakes, the Kanhatti Garden waterfalls, hiking around "
+            "Sakesar, and historic forts (Akrand, Tulhath) and shrines within the valley."
+        ),
+    },
+    "Mukshpuri Forest": {
+        "location": "Mukshpuri peak, Nathiagali area, Abbottabad District, Khyber Pakhtunkhwa",
+        "forest_type": "Coniferous Forest (moist temperate)",
+        "covered_area": "Part of the wider Ayubia National Park / Nathiagali forest tract (Ayubia NP covers about 3,312 hectares)",
+        "history_origin": (
+            "Forested hill forming part of the Galyat forest belt developed as a hill-station retreat under "
+            "British colonial administration; now managed jointly with the adjacent Ayubia National Park."
+        ),
+        "wildlife_nature": (
+            "Dense fir, spruce, pine and oak forest sheltering the common leopard, Himalayan palm civet, kalij "
+            "pheasant and a rich songbird population; part of a key west Himalayan biodiversity corridor with "
+            "Miranjani and Ayubia."
+        ),
+        "attractions_recreation": (
+            "A popular day hike (Mukshpuri Top trail) from Nathiagali offering panoramic Galyat views; a "
+            "staging point on the longer Mukshpuri–Miranjani ridge trek."
+        ),
+    },
+    "Rama Meadows Forest": {
+        "location": "Rama Valley, above Astore, Gilgit-Baltistan (base-camp side of Nanga Parbat)",
+        "forest_type": "Coniferous Forest bordering high-altitude alpine meadow",
+        "covered_area": "Localized valley forest and meadow belt (not precisely documented)",
+        "history_origin": (
+            "A traditional summer grazing meadow (Rama Lake sits above the tree line) used seasonally by local "
+            "herding communities; it has become a gateway trekking base on the Astore side of Nanga Parbat."
+        ),
+        "wildlife_nature": (
+            "Pine forest gives way to open alpine meadow and Rama Lake near the treeline, with views of Nanga "
+            "Parbat (8,126 m); habitat for markhor and a range of high-altitude birdlife in the surrounding hills."
+        ),
+        "attractions_recreation": (
+            "Camping among pine forest below Nanga Parbat, jeep tracks and short hikes to Rama Lake, and access "
+            "to further trekking toward Nanga Parbat base camp."
+        ),
+    },
+    "Kalam Forest": {
+        "location": "Kalam Valley, Upper Swat District, Khyber Pakhtunkhwa (also referred to as part of Ushu Forest)",
+        "forest_type": "Coniferous Forest",
+        "covered_area": "Forms a continuous belt with Ushu Forest stretching toward Utror and Matiltan",
+        "history_origin": (
+            "One of Swat's best-known forest tracts, historically part of the princely State of Swat's managed "
+            "timber reserves before merger into Pakistan in 1969; now a cornerstone of upper Swat's tourism economy."
+        ),
+        "wildlife_nature": (
+            "Pine, deodar and fir cover with diverse wildlife; the forest and adjoining Swat River corridor "
+            "support trout streams and seasonal wildflower meadows."
+        ),
+        "attractions_recreation": (
+            "Gateway to Mahodand Lake, Usho and Matiltan valleys; popular for hiking, riverside picnicking, "
+            "trout fishing and camping, especially May–October."
+        ),
+    },
+    "Chitral Forests": {
+        "location": "Chitral District, Khyber Pakhtunkhwa (including Chitral Gol, Birir and other side valleys)",
+        "forest_type": "Coniferous / dry temperate forest",
+        "covered_area": "Distributed across multiple valleys; Chitral Gol National Park alone covers 7,750 hectares",
+        "history_origin": (
+            "Long managed under the former princely State of Chitral's forest and hunting reserves, including "
+            "royal hunting grounds later converted into protected areas after Chitral's accession to Pakistan."
+        ),
+        "wildlife_nature": (
+            "Deodar, chilgoza pine and oak forest across steep, dry-temperate terrain; famous as prime habitat "
+            "for the flare-horned (Kashmir) markhor, snow leopard, and diverse high-altitude birdlife."
+        ),
+        "attractions_recreation": (
+            "Wildlife viewing (especially markhor) in Chitral Gol National Park, trekking in side valleys such "
+            "as Birir (home to the Kalash community), and access to the wider Hindu Kush trekking region."
+        ),
+    },
+    "Margalla Hills Scrub Forests": {
+        "location": "Margalla Hills, Islamabad Capital Territory",
+        "forest_type": "Sub-tropical broadleaf / scrub forest transitioning to moist temperate forest at higher points",
+        "covered_area": "Part of Margalla Hills National Park's 17,386 hectares",
+        "history_origin": (
+            "Foothill scrub and mixed broadleaf forest at the edge of the Himalayan and Potohar zones, protected "
+            "since Margalla Hills National Park's establishment in 1980 to conserve its unique Sino-Himalayan flora and fauna."
+        ),
+        "wildlife_nature": (
+            "Phulai (Acacia modesta), olive and other scrub species lower down give way to pine and oak at "
+            "higher elevations; habitat for the grey goral, barking deer, common leopard and rich birdlife at "
+            "the western edge of many Himalayan species' ranges."
+        ),
+        "attractions_recreation": (
+            "Islamabad's most-used hiking network (Trail 3, 5, 6 and others), Daman-e-Koh and Pir Sohawa "
+            "viewpoints, and close access to the Shakarparian and Rawal Lake green belt."
+        ),
+    },
+}
+
+# ---------------------------------------------------------------------------
+# 15. NATIONAL PARKS & MAJOR RECREATIONAL PARKS
+# ---------------------------------------------------------------------------
+# Note: not every entry below is an IUCN/provincially-notified "national park" —
+# several (e.g. city/cantonment parks in Multan and Lahore) are large municipal
+# recreational parks that are commonly referred to as such locally. This is
+# flagged per-entry via the "type" field.
+NATIONAL_PARKS = {
+    "Ayub National Park": {
+        "province": "Punjab", "type": "National Park",
+        "area": "About 4 sq mi (2,300 acres), one of Pakistan's smallest national parks",
+        "established": "1959, by President Ayub Khan",
+        "notes": "Located in Rawalpindi; features an artificial lake, a miniature train, and extensive gardens; was under Rawalpindi Cantonment Board management from 1959–2001.",
+    },
+    "Jallo Park, Lahore": {
+        "province": "Punjab", "type": "Recreation & Wildlife Park",
+        "area": "461 acres (187 hectares)",
+        "established": "1978",
+        "notes": "About 7 km east of Lahore; one of Lahore's three main wildlife parks (with Changa Manga and Lahore Zoo Safari); includes a Wildlife Breeding Centre, a large boating/fishing lake, and a Botanical Garden & Butterfly House.",
+    },
+    "Lulusar-Dudipatsar National Park": {
+        "province": "Khyber Pakhtunkhwa", "type": "National Park",
+        "area": "About 560 km² (together with adjacent Saiful Muluk National Park, the pair protect ~88,000 hectares)",
+        "established": "2003",
+        "notes": "Upper Kaghan Valley, Mansehra District; protects the alpine Lulusar Lake (source of the Kunhar River) and Dudipatsar Lake amid snow-capped peaks; habitat for snow leopard and black bear.",
+    },
+    "Lal Suhanra National Park": {
+        "province": "Punjab", "type": "National Park",
+        "area": "About 658 km² (162,500 acres)",
+        "established": "1972 — Pakistan's first and oldest national park",
+        "notes": "At the edge of the Cholistan Desert, ~35 km from Bahawalpur; a UNESCO Biosphere Reserve combining desert, irrigated forest plantation and the Patisar Lake wetland; reintroduction site for blackbuck and chinkara.",
+    },
+    "Kirthar National Park": {
+        "province": "Sindh", "type": "National Park",
+        "area": "About 3,087 km² — Pakistan's third-largest national park",
+        "established": "1974 (initially a wildlife sanctuary from 1972)",
+        "notes": "Spans the Kirthar Range across Jamshoro and Dadu districts; the first Pakistani park listed on the UN's 1975 List of National Parks; protects Sindh ibex, urial, chinkara and leopard.",
+    },
+    "Khunjerab National Park": {
+        "province": "Gilgit-Baltistan", "type": "National Park",
+        "area": "226,913 hectares",
+        "established": "1975, on the recommendation of zoologist Dr George Schaller",
+        "notes": "High-altitude park (over half above 4,000 m) along the Karakoram Highway to the Khunjerab Pass; established chiefly to protect the Marco Polo sheep, alongside snow leopard and Himalayan ibex.",
+    },
+    "City Park, Multan": {
+        "province": "Punjab", "type": "Municipal Recreational Park",
+        "area": "Not precisely documented",
+        "established": "Not precisely documented",
+        "notes": "A public recreational park within Multan city offering green space, walking areas and family facilities.",
+    },
+    "Kashmir Park, DHA Multan": {
+        "province": "Punjab", "type": "Municipal / Community Park",
+        "area": "Not precisely documented",
+        "established": "Not precisely documented",
+        "notes": "A community park within the DHA Multan housing development, used for local recreation and walking.",
+    },
+    "Chitral Gol National Park": {
+        "province": "Khyber Pakhtunkhwa", "type": "National Park",
+        "area": "7,750 hectares",
+        "established": "1984",
+        "notes": "Lower Chitral District beside the Chitral River, about two hours from Chitral town; one of the most important refuges for the flare-horned (Kashmir) markhor.",
+    },
+    "Chaman Zar-e-Askari Park, Multan": {
+        "province": "Punjab", "type": "Cantonment Recreational Park",
+        "area": "Not precisely documented",
+        "established": "Not precisely documented",
+        "notes": "A garrison/cantonment-run recreational park in Multan (the name translates roughly to \"Garden of the Soldiers\"), used for public leisure.",
+    },
+    "Jinnah Park": {
+        "province": "Multiple provinces (several cities have a Jinnah Park, e.g. Islamabad, Faisalabad)", "type": "Municipal Recreational Park",
+        "area": "Varies by city",
+        "established": "Varies by city",
+        "notes": "A common name for municipal parks across Pakistan named after Quaid-e-Azam Muhammad Ali Jinnah; typically offer walking tracks, playgrounds and green space.",
+    },
+    "Hingol National Park": {
+        "province": "Balochistan", "type": "National Park",
+        "area": "About 6,100 km² (610,043 acres) — Pakistan's largest national park",
+        "established": "1988",
+        "notes": "Spans Lasbela, Awaran and Gwadar districts along the Makran Coastal Highway; famous for the Hingol mud volcanoes, the wind-sculpted 'Princess of Hope' rock formation, and habitat for Sindh ibex and Balochistan black bear.",
+    },
+    "Shakarparian National Park": {
+        "province": "Islamabad Capital Territory", "type": "Urban Park / Cultural Complex",
+        "area": "Part of the wider Islamabad Wildlife Management Board green belt alongside Margalla Hills and Rawal Lake",
+        "established": "Developed alongside Islamabad's planning from the 1960s onward",
+        "notes": "Hilltop park in Islamabad hosting the Pakistan Monument, Lok Virsa heritage museum and the Shakarparian Hills viewpoint overlooking the capital.",
+    },
+    "Faisal Park, Mumtazabad": {
+        "province": "Punjab", "type": "Municipal Recreational Park",
+        "area": "Not precisely documented",
+        "established": "Not precisely documented",
+        "notes": "A neighborhood recreational park in the Mumtazabad area of Multan.",
+    },
+    "Pir Lasura National Park": {
+        "province": "Azad Jammu & Kashmir", "type": "National Park",
+        "area": "About 1,580 hectares (15.8 km²) per peer-reviewed ecological studies (a government gazette figure of 2,916 acres for specified forest compartments is also cited)",
+        "established": "2005",
+        "notes": "Kotli District, near the Line of Control; subtropical pine and scrub forest habitat for common leopard, Indian pangolin and three vulture species including the Himalayan griffon.",
+    },
+    "Hazarganji-Chiltan National Park": {
+        "province": "Balochistan", "type": "National Park",
+        "area": "15,555 hectares (some sources cite a larger historical extent of ~325,000 acres)",
+        "established": "1980",
+        "notes": "Mastung District near Quetta, between the Hazarganji and Chiltan mountain ranges; established to protect the critically endangered, Pakistan-endemic Chiltan markhor.",
+    },
+    "Pakistan Park": {
+        "province": "Punjab", "type": "Municipal Recreational Park",
+        "area": "Not precisely documented",
+        "established": "Not precisely documented",
+        "notes": "A municipal recreational park name used in several Pakistani cities for public green space and family recreation.",
+    },
+    "Machiara National Park": {
+        "province": "Azad Jammu & Kashmir", "type": "National Park",
+        "area": "13,532 hectares",
+        "established": "1996",
+        "notes": "Muzaffarabad District; established chiefly to protect the western tragopan pheasant; infrastructure was damaged in the 2005 Kashmir earthquake.",
+    },
+    "Rajana Forest / Bhagat Wildlife Park": {
+        "province": "Punjab", "type": "Wildlife Breeding Centre / Park",
+        "area": "About 15 acres",
+        "established": "1987–89",
+        "notes": "On the Rajana–Samundri road, about 17 km from Toba Tek Singh and 3 km from Rajana town; a Punjab Wildlife & Parks Department breeding centre and recreational forest park.",
+    },
+    "Margalla Hills National Park": {
+        "province": "Islamabad Capital Territory", "type": "National Park",
+        "area": "17,386 hectares",
+        "established": "1980",
+        "notes": "Foothills bordering Islamabad; drained by the Kurang River, rich in Sino-Himalayan flora and fauna including grey goral, barking deer and leopard; one of the most-visited national parks in the world by hiking traffic.",
+    },
+}
+
+# ---------------------------------------------------------------------------
+# 16. PCA (COURT OF ARBITRATION) TIMELINE — Indus Waters Western Rivers
+#     Arbitration (Islamic Republic of Pakistan v. Republic of India),
+#     PCA Case No. 2023-01
+# ---------------------------------------------------------------------------
+PCA_TIMELINE = [
+    {"date": "19 Aug 2016", "event": "Pakistan institutes arbitration", "detail": "Pakistan files a Request for Arbitration under Annexure G of the Indus Waters Treaty over the design of India's Kishenganga and Ratle hydropower projects; a Court of Arbitration is constituted, with the PCA acting as Secretariat."},
+    {"date": "21 Dec 2022", "event": "India writes to the World Bank on the Neutral Expert track", "detail": "India pursues a parallel Neutral Expert process for the same technical questions, a procedural divergence that becomes a recurring point of contention."},
+    {"date": "3 Feb 2023", "event": "PCA press release on expedited competence procedure", "detail": "The Court concludes its first meeting and initiates an expedited procedure to decide its own competence after India objects to the arbitration proceeding at all."},
+    {"date": "6 Jul 2023", "event": "Award on the Competence of the Court", "detail": "The Court unanimously rejects India's objections and confirms it is competent to hear Pakistan's claims."},
+    {"date": "18 Sep 2023", "event": "Corrections to the Award on Competence", "detail": "Minor corrections issued to the July 2023 competence award."},
+    {"date": "22 Mar 2024", "event": "Pakistan files its Memorial (First Phase on the Merits)", "detail": "Pakistan submits its detailed written case on the technical design disputes."},
+    {"date": "Apr 2024", "event": "Site visit to the Neelum-Jhelum Hydro-Electric Plant", "detail": "The Court conducts a site visit under an agreed protocol as part of its fact-finding on run-of-river design questions."},
+    {"date": "7 Jan 2025", "event": "Neutral Expert issues competence decision", "detail": "In the parallel track, the Neutral Expert finds India's referred points of difference fall within the scope of the treaty's technical Annexure F."},
+    {"date": "Apr 2025", "event": "India announces the IWT is 'held in abeyance'", "detail": "Following a deadly attack on civilians in Indian-administered Kashmir, India states it will hold the treaty in abeyance pending action against cross-border terrorism — the first such disruption in the treaty's history."},
+    {"date": "16 May 2025", "event": "Procedural Order No. 15 issued", "detail": "The Court invites both parties' written submissions on whether India's abeyance announcement affects the Court's and the Neutral Expert's competence; only Pakistan files a submission."},
+    {"date": "27 Jun 2025", "event": "Supplemental Award on the Competence of the Court", "detail": "The Court finds the treaty makes no provision for unilateral abeyance and reaffirms its continuing jurisdiction to proceed with the case."},
+    {"date": "8 Aug 2025", "event": "Award on Issues of General Interpretation of the IWT", "detail": "The Court rules on a set of general treaty-interpretation questions underlying the Kishenganga/Ratle/Pakal Dul design disputes."},
+    {"date": "8 Nov 2025", "event": "Decision on Pakistan's Request for Clarification", "detail": "The Court issues a clarification of aspects of its August 2025 interpretation award, in response to a Pakistani request."},
+    {"date": "21 Nov 2025", "event": "Procedural Order No. 17 (Second Phase on the Merits)", "detail": "The Court sets the schedule for the next substantive phase of the case, addressing the specific technical designs of the disputed projects."},
+    {"date": "12 Mar 2026", "event": "Procedural Order No. 21", "detail": "The Court addresses interim measures and the present status of the treaty in light of India's continued abeyance position."},
+]
+
+HEAD_MARALA_NOTE = (
+    "The dashboard records reported concerns about reduced Chenab flows at Head Marala and potential "
+    "consequences for irrigation and crops as stakeholder claims, rather than asserting a causal crop-loss "
+    "estimate without a hydrological dataset."
+)

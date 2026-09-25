@@ -10,7 +10,8 @@ from coordinates import (
     PROVINCE_COORDS, RIVER_COORDS, DAM_COORDS, MOUNTAIN_PEAK_COORDS, LAKE_COORDS,
     LINK_CANAL_LINES, CLIMATE_REGION_POINTS, GEOPOLITICAL_COORDS,
     INDIA_DISPUTED_DAM_COORDS, CPEC_HYDROPOWER_NAMES, HISTORICAL_EVENT_COORDS,
-    CONFLUENCE_COORDS, DESERT_COORDS, DESERT_OUTLINES,
+    CONFLUENCE_COORDS, DESERT_COORDS, DESERT_OUTLINES, NOTABLE_FOREST_COORDS,
+    NATIONAL_PARK_COORDS,
 )
 
 PAK_CENTER = {"lat": 30.3753, "lon": 69.3451}
@@ -400,4 +401,30 @@ def custom_points_map(df, title: str = "Uploaded Data on Map") -> go.Figure:
         ))
 
     fig.update_geos(fitbounds="locations", visible=True)
+    return fig
+
+
+def forests_map() -> go.Figure:
+    fig = _base_figure("Notable Forests of Pakistan")
+    lats = [v["lat"] for v in NOTABLE_FOREST_COORDS.values()]
+    lons = [v["lon"] for v in NOTABLE_FOREST_COORDS.values()]
+    names = [f"{k} ({v['province']})" for k, v in NOTABLE_FOREST_COORDS.items()]
+    fig.add_trace(go.Scattergeo(
+        lat=lats, lon=lons, text=names, mode="markers+text",
+        marker=dict(size=12, color="#2e7d32", symbol="triangle-up", line=dict(width=1, color="white")),
+        textposition="top center", name="Notable Forests", hoverinfo="text",
+    ))
+    return fig
+
+
+def national_parks_map() -> go.Figure:
+    fig = _base_figure("National Parks & Major Recreational Parks of Pakistan")
+    lats = [v["lat"] for v in NATIONAL_PARK_COORDS.values()]
+    lons = [v["lon"] for v in NATIONAL_PARK_COORDS.values()]
+    names = [f"{k} ({v['province']})" for k, v in NATIONAL_PARK_COORDS.items()]
+    fig.add_trace(go.Scattergeo(
+        lat=lats, lon=lons, text=names, mode="markers",
+        marker=dict(size=11, color="#1565c0", symbol="star", line=dict(width=1, color="white")),
+        name="Parks", hoverinfo="text",
+    ))
     return fig
