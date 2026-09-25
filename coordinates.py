@@ -89,6 +89,20 @@ PROVINCE_CENTROIDS = {k: (v["lat"], v["lon"]) for k, v in PROVINCE_COORDS.items(
 # Deserts: representative centroid points, plus a rough multi-point outline
 # per desert so it can be drawn as a shaded extent on the map.
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Indus Delta soil-salinity survey sample sites (Thatta/Sujawal/Badin
+# districts) — see data_loader.INDUS_DELTA_SAMPLE_SITES.
+# ---------------------------------------------------------------------------
+INDUS_DELTA_SITE_COORDS = {
+    "Keti Bandar": {"lat": 24.1400, "lon": 67.4500},
+    "Kharo Chan": {"lat": 24.0500, "lon": 67.3500},
+    "Shah Bandar": {"lat": 24.1300, "lon": 67.9000},
+    "Sujawal (town)": {"lat": 24.5300, "lon": 68.0800},
+    "Jati": {"lat": 24.3500, "lon": 68.2700},
+    "Thatta (town)": {"lat": 24.7500, "lon": 67.9200},
+    "Badin": {"lat": 24.6500, "lon": 68.8400},
+}
+
 DESERT_COORDS = {
     "Thar Desert (Great Indian Desert)": {"lat": 25.00, "lon": 70.20, "province": "Sindh"},
     "Cholistan Desert (Rohi)": {"lat": 29.10, "lon": 71.90, "province": "Punjab"},

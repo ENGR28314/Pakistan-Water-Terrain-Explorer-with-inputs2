@@ -38,6 +38,12 @@ Created by **Engr. Syed Hassan Iqbal Shah**.
   Hazarganji-Chiltan, Machiara, Margalla Hills, Rajana/Bhagat Wildlife
   Park, and several municipal recreational parks in Multan/Lahore/
   Islamabad — with province, area, establishment and notes.
+- **Indus Delta Soil Salinity (EMI Survey)** — electromagnetic induction
+  (EMI) survey and soil-sampling methodology, FAO/Richards salinity-sodicity
+  classification thresholds, published depth-wise EC/ESP exceedance
+  findings (Solangi et al., 2019), and an interactive map/charts of
+  interpolated EC, pH, ESP and salinity class across illustrative sample
+  sites in Thatta, Sujawal and Badin districts.
 - **National Disaster Risk Context** — hazard profile (hydro-meteorological,
   tectonic, climatological/emerging, anthropogenic), exposure & vulnerability
   assessment, emerging risks (GLOFs, erratic monsoons, sea intrusion), and

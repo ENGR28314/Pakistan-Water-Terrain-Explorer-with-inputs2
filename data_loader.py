@@ -1031,6 +1031,16 @@ SOURCES = {
             "url": "https://www.worldbank.org/en/news/feature/2021/03/25/managing-groundwater-resources-in-pakistan-indus-basin",
         },
     ],
+    "Indus Delta Soil Salinity": [
+        {
+            "label": "Solangi et al. (2019) — Spatial Analysis of Soil Salinity in the Indus River Delta, Pakistan (ETASR 9(3))",
+            "url": "https://doi.org/10.48084/etasr.2818",
+        },
+        {
+            "label": "FAO — Sodic Soils and Their Management (salinity/sodicity classification thresholds)",
+            "url": "https://www.fao.org/4/x5871e/x5871e05.htm",
+        },
+    ],
 }
 
 # ---------------------------------------------------------------------------
@@ -1403,6 +1413,78 @@ NATIONAL_PARKS = {
         "notes": "Foothills bordering Islamabad; drained by the Kurang River, rich in Sino-Himalayan flora and fauna including grey goral, barking deer and leopard; one of the most-visited national parks in the world by hiking traffic.",
     },
 }
+
+# ---------------------------------------------------------------------------
+# 15B. INDUS DELTA SOIL SALINITY — EMI SURVEY & SOIL SAMPLING
+# ---------------------------------------------------------------------------
+# Summary statistics and classification thresholds below are drawn from
+# published research (see study_reference / SOURCES); the SAMPLE_SITES table
+# is clearly-labeled illustrative data for the map/chart demo, not the
+# original study's raw dataset.
+INDUS_DELTA_SOIL_SURVEY = {
+    "overview": (
+        "Reduced freshwater and silt discharge from the Indus (due to upstream storage, diversion and canal "
+        "withdrawals) has allowed saline seawater from the Arabian Sea to intrude into the Indus River Delta "
+        "(IRD), degrading agricultural land across Thatta, Sujawal and Badin districts. Researchers have "
+        "combined electromagnetic induction (EMI) surveying with physical soil sampling to map the resulting "
+        "soil salinity and sodicity across the delta."
+    ),
+    "study_reference": (
+        "Solangi, G.S., Siyal, A.A., Babar, M.M. & Siyal, P. (2019). 'Spatial Analysis of Soil Salinity in the "
+        "Indus River Delta, Pakistan.' Engineering, Technology & Applied Science Research, 9(3), 4271–4275. "
+        "DOI: 10.48084/etasr.2818"
+    ),
+    "methodology": {
+        "Electromagnetic Induction (EMI) Survey": (
+            "A handheld EMI instrument (e.g. an EM38-type sensor, as used in earlier Pakistani salinity-"
+            "monitoring work) is passed over the soil surface without ground contact, in horizontal and "
+            "vertical coil orientations, to rapidly measure apparent soil electrical conductivity (ECa) at "
+            "different depths across a grid — a fast, non-invasive way to cover a large delta area."
+        ),
+        "Soil Sampling & Laboratory Calibration": (
+            "EMI readings are calibrated against physically collected soil samples analyzed in the "
+            "laboratory. The referenced Indus Delta study analyzed 375 soil samples from 125 locations across "
+            "three depth increments (0–20 cm, 20–40 cm and 40–60 cm), measuring electrical conductivity (EC), "
+            "pH and exchangeable sodium percentage (ESP)."
+        ),
+        "Spatial Interpolation": (
+            "Point measurements (EMI and/or lab-calibrated samples) are interpolated across the survey area "
+            "using geostatistical techniques such as ordinary kriging or cokriging, producing continuous maps "
+            "of estimated EC, pH, ESP and overall soil salinity/sodicity class."
+        ),
+    },
+    "salinity_sodicity_classification": {
+        "Normal (non-saline, non-sodic)": "ECe < 4 dS/m and ESP < 15",
+        "Saline soil": "ECe > 4 dS/m, ESP < 15, saturated-paste pH < 8.5",
+        "Sodic soil": "ECe < 4 dS/m, ESP > 15, saturated-paste pH > 8.5 (occasionally exceeding 10.5)",
+        "Saline-sodic soil": "ECe > 4 dS/m, ESP > 15, saturated-paste pH < 8.5",
+    },
+    "depth_wise_findings": {
+        "0–20 cm (topsoil)": {"ec_exceeding_fao": 66.4, "esp_exceeding_fao": 72.8},
+        "20–40 cm": {"ec_exceeding_fao": 60.8, "esp_exceeding_fao": 72.0},
+        "40–60 cm": {"ec_exceeding_fao": 56.8, "esp_exceeding_fao": 79.2},
+    },
+    "key_findings": (
+        "Across all three depths, more than half of the 375 samples exceeded FAO guideline thresholds for "
+        "EC and ESP, and spatial analysis found more than 50% of the Indus River Delta sampled was affected "
+        "by soil salinity overall — with reduced freshwater flow and seawater intrusion identified as the "
+        "likely drivers."
+    ),
+}
+
+# Illustrative sample points across the Indus Delta for the map/chart demo.
+# NOT the original study's raw per-site dataset — representative values only,
+# consistent with the published depth-wise findings and FAO/Richards
+# classification thresholds above.
+INDUS_DELTA_SAMPLE_SITES = [
+    {"site": "Keti Bandar", "district": "Thatta", "EC_dS_per_m": 9.8, "pH": 8.6, "ESP_pct": 38, "classification": "Saline-sodic"},
+    {"site": "Kharo Chan", "district": "Thatta", "EC_dS_per_m": 14.2, "pH": 8.4, "ESP_pct": 45, "classification": "Saline-sodic"},
+    {"site": "Shah Bandar", "district": "Sujawal", "EC_dS_per_m": 6.1, "pH": 8.7, "ESP_pct": 22, "classification": "Saline-sodic"},
+    {"site": "Sujawal (town)", "district": "Sujawal", "EC_dS_per_m": 3.1, "pH": 8.9, "ESP_pct": 19, "classification": "Sodic soil"},
+    {"site": "Jati", "district": "Sujawal", "EC_dS_per_m": 5.4, "pH": 8.2, "ESP_pct": 12, "classification": "Saline soil"},
+    {"site": "Thatta (town)", "district": "Thatta", "EC_dS_per_m": 2.4, "pH": 7.9, "ESP_pct": 8, "classification": "Normal (non-saline, non-sodic)"},
+    {"site": "Badin", "district": "Badin", "EC_dS_per_m": 4.6, "pH": 8.3, "ESP_pct": 17, "classification": "Saline-sodic"},
+]
 
 # ---------------------------------------------------------------------------
 # 16. PCA (COURT OF ARBITRATION) TIMELINE — Indus Waters Western Rivers

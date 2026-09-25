@@ -45,6 +45,7 @@ SECTIONS = [
     "🏜️ Deserts",
     "🌲 Forests",
     "🌳 National Parks",
+    "🧂 Indus Delta Soil Salinity (EMI Survey)",
     "⚠️ Disaster Risk Context",
     "📈 Socio-Economic & Agro-Economic",
     "🗺️ Geo-Political & Strategic",
@@ -99,6 +100,8 @@ if choice == "🏠 Overview":
         "and notable forests with history, wildlife and attractions\n"
         "- **National Parks** — Pakistan's national parks and major recreational parks, "
         "with area, establishment and notes\n"
+        "- **Indus Delta Soil Salinity** — EMI survey and soil-sampling methodology, FAO "
+        "salinity/sodicity classification, and interpolated EC/pH/ESP sample sites\n"
         "- **National Disaster Risk Context** — hazard profile, exposure/vulnerability, "
         "emerging risks (GLOFs, monsoon variability, sea intrusion), risk scenarios\n"
         "- **Socio-Economic & Agro-Economic Domains** — food security, IBIS, GDP linkages, "
@@ -397,6 +400,68 @@ elif choice == "🌳 National Parks":
     st.markdown(f"**Area:** {p['area']}")
     st.markdown(f"**Established:** {p['established']}")
     st.write(p["notes"])
+
+# ---------------------------------------------------------------------------
+# 🧂 INDUS DELTA SOIL SALINITY (EMI SURVEY)
+# ---------------------------------------------------------------------------
+elif choice == "🧂 Indus Delta Soil Salinity (EMI Survey)":
+    st.title("Indus Delta Soil Salinity — EMI Survey & Soil Sampling")
+    s = data.INDUS_DELTA_SOIL_SURVEY
+    st.write(s["overview"])
+    st.caption(f"Study reference: {s['study_reference']}")
+
+    st.header("🔬 Methodology")
+    for step, desc in s["methodology"].items():
+        with st.expander(step):
+            st.write(desc)
+
+    st.header("📊 Depth-wise Findings — Samples Exceeding FAO Guidelines")
+    depth_df = pd.DataFrame([
+        {"Depth": depth, "EC exceeding FAO (%)": v["ec_exceeding_fao"], "ESP exceeding FAO (%)": v["esp_exceeding_fao"]}
+        for depth, v in s["depth_wise_findings"].items()
+    ])
+    fig_depth = px.bar(
+        depth_df, x="Depth", y=["EC exceeding FAO (%)", "ESP exceeding FAO (%)"],
+        barmode="group", title="Share of samples exceeding FAO EC/ESP guidelines, by depth",
+    )
+    st.plotly_chart(fig_depth, use_container_width=True)
+    st.info(s["key_findings"])
+
+    st.header("📏 Salinity / Sodicity Classification (Richards / FAO thresholds)")
+    for cls, threshold in s["salinity_sodicity_classification"].items():
+        st.markdown(f"**{cls}:** {threshold}")
+
+    st.header("🗺️ Interpolated Sample Sites — EC, pH & ESP")
+    st.caption(
+        "Illustrative representative sample points across Thatta, Sujawal and Badin districts — "
+        "for demonstration, not the original study's raw per-site dataset."
+    )
+    st.plotly_chart(map_view.indus_delta_soil_map(data.INDUS_DELTA_SAMPLE_SITES), use_container_width=True)
+
+    sites_df = pd.DataFrame(data.INDUS_DELTA_SAMPLE_SITES).rename(columns={
+        "site": "Site", "district": "District", "EC_dS_per_m": "EC (dS/m)",
+        "pH": "pH", "ESP_pct": "ESP (%)", "classification": "Classification",
+    })
+    st.dataframe(sites_df, use_container_width=True, hide_index=True)
+
+    chart_col1, chart_col2 = st.columns(2)
+    with chart_col1:
+        st.plotly_chart(
+            px.bar(sites_df, x="Site", y="EC (dS/m)", color="Classification", title="Electrical Conductivity by Site"),
+            use_container_width=True,
+        )
+    with chart_col2:
+        st.plotly_chart(
+            px.scatter(
+                sites_df, x="pH", y="ESP (%)", color="Classification", size="EC (dS/m)",
+                hover_name="Site", title="ESP vs. pH (bubble size = EC)",
+            ),
+            use_container_width=True,
+        )
+
+    with st.expander("📚 Sources for this section"):
+        for ref in data.SOURCES.get("Indus Delta Soil Salinity", []):
+            st.markdown(f"- [{ref['label']}]({ref['url']})")
 
 # ---------------------------------------------------------------------------
 # ⚠️ DISASTER RISK CONTEXT

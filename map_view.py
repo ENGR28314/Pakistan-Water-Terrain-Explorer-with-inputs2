@@ -11,7 +11,7 @@ from coordinates import (
     LINK_CANAL_LINES, CLIMATE_REGION_POINTS, GEOPOLITICAL_COORDS,
     INDIA_DISPUTED_DAM_COORDS, CPEC_HYDROPOWER_NAMES, HISTORICAL_EVENT_COORDS,
     CONFLUENCE_COORDS, DESERT_COORDS, DESERT_OUTLINES, NOTABLE_FOREST_COORDS,
-    NATIONAL_PARK_COORDS,
+    NATIONAL_PARK_COORDS, INDUS_DELTA_SITE_COORDS,
 )
 
 PAK_CENTER = {"lat": 30.3753, "lon": 69.3451}
@@ -427,4 +427,45 @@ def national_parks_map() -> go.Figure:
         marker=dict(size=11, color="#1565c0", symbol="star", line=dict(width=1, color="white")),
         name="Parks", hoverinfo="text",
     ))
+    return fig
+
+
+def indus_delta_soil_map(sample_sites) -> go.Figure:
+    """
+    Map the Indus Delta soil-salinity sample sites (see
+    data_loader.INDUS_DELTA_SAMPLE_SITES), color-coded by salinity/sodicity
+    classification, with EC/pH/ESP shown on hover.
+    """
+    fig = _base_figure("Indus Delta Soil Salinity — Sample Sites")
+
+    class_colors = {
+        "Normal (non-saline, non-sodic)": "#2ca02c",
+        "Saline soil": "#ff7f0e",
+        "Sodic soil": "#9467bd",
+        "Saline-sodic soil": "#d62728",
+    }
+
+    by_class = {}
+    for rec in sample_sites:
+        by_class.setdefault(rec["classification"], []).append(rec)
+
+    for cls, records in by_class.items():
+        lats, lons, texts = [], [], []
+        for rec in records:
+            coord = INDUS_DELTA_SITE_COORDS.get(rec["site"])
+            if not coord:
+                continue
+            lats.append(coord["lat"])
+            lons.append(coord["lon"])
+            texts.append(
+                f"{rec['site']} ({rec['district']})<br>"
+                f"EC: {rec['EC_dS_per_m']} dS/m<br>pH: {rec['pH']}<br>ESP: {rec['ESP_pct']}%"
+            )
+        fig.add_trace(go.Scattergeo(
+            lat=lats, lon=lons, text=texts, mode="markers", hoverinfo="text",
+            name=cls,
+            marker=dict(size=12, color=class_colors.get(cls, "#1f77b4"), line=dict(width=1, color="white")),
+        ))
+
+    fig.update_geos(fitbounds="locations", visible=True)
     return fig
